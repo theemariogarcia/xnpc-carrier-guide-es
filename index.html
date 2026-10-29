@@ -390,6 +390,24 @@
     .rule-item { padding: 10px 12px; color: #b9becb; border-left: 2px solid var(--rule-color); background: rgba(255,255,255,.025); font-size: 12px; line-height: 1.55; }
     .rule-item strong { color: #f3f4f8; }
     .source-language-note { margin-top: 10px; color: #6f7688; font-size: 11px; }
+    .comp-panel { margin-bottom: 22px; padding: 22px; border: 1px solid rgba(99,216,255,.18); border-radius: var(--radius); background: linear-gradient(145deg, rgba(99,216,255,.06), rgba(139,140,255,.025)); box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.04); }
+    .comp-input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .comp-results { display: grid; gap: 18px; }
+    .comp-summary { margin: 0; }
+    .comp-carrier-group { overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.018); }
+    .comp-carrier-group > h3 { margin: 0; padding: 13px 16px; color: #b9baff; border-bottom: 1px solid var(--line); background: rgba(139,140,255,.055); font-size: 14px; font-weight: 600; }
+    .comp-result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .comp-result { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 18px; align-items: center; min-width: 0; padding: 15px 16px; border-bottom: 1px solid var(--line); }
+    .comp-result:nth-child(odd) { border-right: 1px solid var(--line); }
+    .comp-result-grid .comp-result:nth-last-child(-n+2) { border-bottom: 0; }
+    .comp-product { min-width: 0; }
+    .comp-product strong, .comp-product span { display: block; }
+    .comp-product strong { color: #f4f6fb; font-size: 13px; font-weight: 590; }
+    .comp-product span { margin-top: 3px; color: #7f8799; font-size: 10px; line-height: 1.4; }
+    .comp-metric { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; color: #737b8f; font-size: 10px; }
+    .comp-metric strong { color: #cfd3df; font-size: 13px; white-space: nowrap; }
+    .comp-money { grid-column: 1 / -1; padding-top: 9px; border-top: 1px solid rgba(255,255,255,.055); }
+    .comp-money strong { color: #63d8ff; font-size: 19px; font-weight: 650; }
 
     @media (max-width: 820px) {
       .wrap { width: min(100% - 24px, 1160px); padding-top: 20px; }
@@ -403,6 +421,11 @@
       .finder-heading { align-items: start; flex-direction: column; }
       .finder-grid { grid-template-columns: 1fr 1fr; }
       .finder-grid .wide { grid-column: 1 / -1; }
+      .comp-panel { padding: 16px; }
+      .comp-input-grid { grid-template-columns: 1fr; }
+      .comp-result-grid { grid-template-columns: 1fr; }
+      .comp-result, .comp-result:nth-child(odd), .comp-result-grid .comp-result:nth-last-child(-n+2) { border-right: 0; border-bottom: 1px solid var(--line); }
+      .comp-result:last-child { border-bottom: 0; }
       .uw-result-main { grid-template-columns: 42px 1fr; gap: 10px; }
       .result-reason, .result-tier { grid-column: 2; justify-self: start; }
       button { width: 100%; }
@@ -481,6 +504,7 @@
     <nav class="tool-tabs" aria-label="Guide tools">
       <button class="tool-tab active" type="button" data-panel="underwriting-finder" data-uw-i18n="finderTab">Underwriting Finder</button>
       <button class="tool-tab" type="button" data-panel="placement-guide" data-uw-i18n="placementTab">Immigration & Product Guide</button>
+      <button class="tool-tab" type="button" data-panel="compensation-calculator" data-comp-i18n="tab">Compensation Calculator</button>
     </nav>
 
     <section id="underwriting-finder" class="tool-panel" aria-labelledby="finder-title">
@@ -513,6 +537,27 @@
       <div id="uw-legend" class="outcome-legend" aria-label="Outcome color legend"></div>
       <div id="uw-results" class="finder-empty" data-uw-i18n="empty">Enter age, height, and weight to compare carriers.</div>
       <p class="source-language-note" data-uw-i18n="sourceNote">Carrier rule details currently preserve the exact English source wording from the uploaded 2026 guide.</p>
+    </section>
+
+    <section id="compensation-calculator" class="tool-panel" hidden aria-labelledby="comp-title">
+      <div class="comp-panel">
+        <div class="finder-heading">
+          <div>
+            <p class="eyebrow" data-comp-i18n="eyebrow">ESTIMADO DE PRIMER AÑO</p>
+            <h2 id="comp-title" data-comp-i18n="title">Calculadora de compensación por carrier</h2>
+            <p data-comp-i18n="lead">Ingresa tu nivel de comp FFL y la prima anual confirmada por el carrier. Las tasas y la compensación bruta estimada del primer año se actualizan automáticamente.</p>
+          </div>
+          <span class="internal-badge" data-uw-i18n="producerOnly">Solo para productores</span>
+        </div>
+        <div class="comp-input-grid">
+          <div><label for="comp-level" data-comp-i18n="compLevel">Nivel de comp FFL</label><select id="comp-level"></select></div>
+          <div><label for="comp-ap" data-comp-i18n="annualPremium">Prima anual</label><input id="comp-ap" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="1200"></div>
+          <div><label for="comp-carrier" data-comp-i18n="carrier">Carrier</label><select id="comp-carrier"></select></div>
+        </div>
+        <div id="comp-validation" class="source-language-note" role="alert"></div>
+      </div>
+      <div id="comp-results" class="finder-empty" data-comp-i18n="empty">Ingresa el nivel de comp y la prima anual para ver el ingreso estimado por carrier y producto.</div>
+      <p class="source-language-note"><span data-comp-i18n="source">Tasas cargadas de FFL Comp Master Sheet — Admin Copy.</span> <span data-comp-i18n="disclaimer">Solo es un estimado. Usa la prima anual y el producto confirmados por el carrier. La compensación real puede variar por anticipos, chargebacks, reglas del producto, bonos, impuestos o cambios en la tabla.</span></p>
     </section>
 
     <section id="placement-guide" class="tool-panel" hidden>
@@ -554,6 +599,7 @@
   </main>
 
   <script src="underwriting-data.js"></script>
+  <script src="compensation-data.js"></script>
   <script>
     const entries = [
       { carrier:"Mutual of Omaha", product:"IUL Express", status:["citizen"], health:["healthy"], statusText:"Ciudadanos y residentes permanentes solamente", healthText:"Salud estándar (sin condiciones significativas)" },
@@ -864,5 +910,6 @@
     applyLanguage(initialLanguage);
   </script>
   <script src="underwriting-finder.js"></script>
+  <script src="compensation-calculator.js"></script>
 </body>
 </html>
