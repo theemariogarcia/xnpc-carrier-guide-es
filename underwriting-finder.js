@@ -2,11 +2,14 @@
   "use strict";
 
   const data = window.XNPC_UW_DATA;
+  const compData = window.XNPC_COMP_DATA;
   if (!data) return;
 
   const $ = (id) => document.getElementById(id);
   const outcomeOrder = ["favorable", "limited", "gi", "verify", "na", "crossref", "decline"];
   const selectedConditions = new Set();
+  const selectedCompProducts = new Map();
+  let hasEvaluated = false;
 
   const ui = {
     en: {
@@ -18,6 +21,7 @@
       required: "Enter a valid age, height, and weight.", results: "Ranked carrier options", profile: "Profile", details: "View source rules and decision details", noConditions: "No health condition selected",
       ageReason: "Age eligible", ageIneligible: "Outside product age range", tobaccoAge: "Outside Americo tobacco age range", chartHeight: "Uses the nearest lower published chart row",
       build: "Build", health: "Health", remove: "Remove", exactSource: "Exact source rule", overall: "Overall pre-screen", options: "options compared",
+      commissionOption: "Optional: calculate commission with these results", compLevel: "FFL comp level", annualPremium: "Annual premium", chooseComp: "Select comp level", completeComp: "Enter both comp level and annual premium to calculate commission.", invalidPremium: "Enter an annual premium greater than $0.", approvalFirst: "Ranked by approval fit first; commission only breaks ties between equally viable options.", compProduct: "Comp product", compRate: "Comp rate", estimatedEarnings: "Estimated earnings", missingComp: "No matching compensation schedule was included for this carrier in the uploaded sheet.",
       favorable: "Level / Day-1 / Select / OK / Standard", limited: "Modified / Graded / ROP / Basic", gi: "GI Route / Guaranteed Issue", verify: "Check Meds / See Condition", na: "N/A / Not asked", crossref: "See Other Section", decline: "Decline / Ineligible"
     },
     es: {
@@ -29,6 +33,7 @@
       required: "Ingresa una edad, estatura y peso válidos.", results: "Opciones de carriers ordenadas", profile: "Perfil", details: "Ver reglas fuente y detalles de decisión", noConditions: "Sin condición de salud seleccionada",
       ageReason: "Edad elegible", ageIneligible: "Fuera del rango de edad del producto", tobaccoAge: "Fuera del rango de edad de Americo para tabaco", chartHeight: "Usa la fila publicada inmediatamente inferior",
       build: "Complexión", health: "Salud", remove: "Quitar", exactSource: "Regla exacta de la fuente", overall: "Pre-evaluación general", options: "opciones comparadas",
+      commissionOption: "Opcional: calcula la comisión con estos resultados", compLevel: "Nivel de comp FFL", annualPremium: "Prima anual", chooseComp: "Selecciona el nivel de comp", completeComp: "Ingresa el nivel de comp y la prima anual para calcular la comisión.", invalidPremium: "Ingresa una prima anual mayor de $0.", approvalFirst: "El orden prioriza la viabilidad de aprobación; la comisión solo desempata opciones igualmente viables.", compProduct: "Producto para comp", compRate: "Tasa de comp", estimatedEarnings: "Ingreso estimado", missingComp: "La hoja cargada no incluye una tabla de compensación correspondiente para este carrier.",
       favorable: "Nivelada / Día 1 / Select / OK / Standard", limited: "Modificada / Gradual / ROP / Basic", gi: "Ruta GI / Emisión garantizada", verify: "Revisar medicamentos / Ver condición", na: "N/A / No preguntado", crossref: "Ver otra sección", decline: "Declinación / No elegible"
     }
   };
@@ -66,8 +71,28 @@
       if (value) element.textContent = value;
     });
     populateConditionSelect();
+    populateCompLevels();
     renderSelectedConditions();
     renderLegend();
+    if (hasEvaluated) evaluate();
+  }
+
+  function populateCompLevels() {
+    const select = $("uw-comp-level");
+    if (!select || !compData) return;
+    const previous = select.value;
+    select.innerHTML = "";
+    const prompt = document.createElement("option");
+    prompt.value = "";
+    prompt.textContent = text().chooseComp;
+    select.appendChild(prompt);
+    [...compData.levels].reverse().forEach((level) => {
+      const option = document.createElement("option");
+      option.value = String(level);
+      option.textContent = `${level}%`;
+      select.appendChild(option);
+    });
+    select.value = previous;
   }
 
   function populateConditionSelect() {
@@ -169,6 +194,90 @@
       .replaceAll("No height/weight chart — any build accepted", "Sin tabla de estatura/peso — acepta cualquier complexión");
   }
 
+  function commissionProfile() {
+    const validation = $("uw-comp-validation");
+    const level = $("uw-comp-level").value;
+    const premiumRaw = $("uw-comp-ap").value.trim();
+    validation.textContent = "";
+    if (!level && !premiumRaw) return null;
+    if (!level || !premiumRaw) {
+      validation.textContent = text().completeComp;
+      return null;
+    }
+    const premium = Number(premiumRaw);
+    if (!Number.isFinite(premium) || premium <= 0) {
+      validation.textContent = text().invalidPremium;
+      return null;
+    }
+    return { level, premium };
+  }
+
+  function compCarrierFor(carrier) {
+    if (!compData) return null;
+    const id = carrier.id === "american_amicable" ? "american-amicable" : carrier.id;
+    return compData.carriers.find((item) => item.id === id) || null;
+  }
+
+  function ageRange(product) {
+    const source = `${product.name} ${product.variant}`;
+    const match = source.match(/(?:Issue\s+)?Ages?\s+(\d{2})\s*[-–]\s*(\d{2})/i);
+    return match ? { min: Number(match[1]), max: Number(match[2]) } : null;
+  }
+
+  function commissionProducts(carrier, age) {
+    const compCarrier = compCarrierFor(carrier);
+    if (!compCarrier) return [];
+    const keywords = {
+      americo: "eagle select",
+      moo: "final expense",
+      transamerica: "fe express",
+      corebridge: "simplinow legacy",
+      aetna: "final expense",
+      foresters: "planright",
+      american_amicable: "senior/family choice"
+    };
+    const keyword = keywords[carrier.id];
+    const matched = keyword ? compCarrier.products.filter((product) => product.name.toLowerCase().includes(keyword)) : compCarrier.products;
+    const products = matched.length ? matched : compCarrier.products;
+    const ageEligible = products.filter((product) => {
+      const range = ageRange(product);
+      return !range || (age >= range.min && age <= range.max);
+    });
+    return ageEligible.length ? ageEligible : products;
+  }
+
+  function commissionFor(carrier, age, outcome, profile) {
+    if (!profile) return null;
+    const products = commissionProducts(carrier, age);
+    if (!products.length) return null;
+    const preferredId = selectedCompProducts.get(carrier.id);
+    let product = products.find((item) => item.id === preferredId);
+    if (!product) {
+      product = [...products].sort((a, b) => {
+        let aFit = 0;
+        let bFit = 0;
+        if (carrier.id === "foresters") {
+          aFit = outcome === "limited" ? Number(a.name.includes("Basic")) : Number(a.name.includes("Preferred/Standard"));
+          bFit = outcome === "limited" ? Number(b.name.includes("Basic")) : Number(b.name.includes("Preferred/Standard"));
+        }
+        if (carrier.id === "transamerica") {
+          aFit = outcome === "limited" ? Number(a.name.startsWith("Graded")) : Number(a.name.startsWith("FE Express"));
+          bFit = outcome === "limited" ? Number(b.name.startsWith("Graded")) : Number(b.name.startsWith("FE Express"));
+        }
+        return bFit - aFit || b.rates[profile.level] - a.rates[profile.level] || a.name.localeCompare(b.name);
+      })[0];
+    }
+    return { products, product, rate: product.rates[profile.level] };
+  }
+
+  function formatRate(rate) {
+    return `${new Intl.NumberFormat(language() === "es" ? "es-US" : "en-US", { maximumFractionDigits: 2 }).format(rate)}%`;
+  }
+
+  function formatMoney(amount) {
+    return new Intl.NumberFormat(language() === "es" ? "es-US" : "en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount);
+  }
+
   function evaluate() {
     const age = Number($("uw-age").value);
     const feet = Number($("uw-feet").value);
@@ -181,8 +290,10 @@
       return;
     }
     validation.textContent = "";
+    hasEvaluated = true;
     const height = feet * 12 + inches;
     const chosen = [...selectedConditions].map((id) => data.conditions.find((item) => item.id === id)).filter(Boolean);
+    const commission = commissionProfile();
 
     const results = data.carriers.map((carrier) => {
       let ageOutcome = "favorable";
@@ -196,10 +307,13 @@
       const rules = chosen.map((condition) => ({ condition, rule: condition.rules[carrier.id] })).filter((item) => item.rule);
       const healthOutcome = rules.length ? worstOutcome(rules.map((item) => item.rule.outcome)) : "favorable";
       const outcome = worstOutcome([ageOutcome, build.outcome, healthOutcome]);
-      return { carrier, outcome, ageOutcome, ageReason, build, healthOutcome, rules };
-    }).sort((a, b) => data.outcomes[a.outcome].rank - data.outcomes[b.outcome].rank || data.outcomes[a.healthOutcome].rank - data.outcomes[b.healthOutcome].rank || a.carrier.name.localeCompare(b.carrier.name));
+      return { carrier, outcome, ageOutcome, ageReason, build, healthOutcome, rules, commission: commissionFor(carrier, age, outcome, commission) };
+    }).sort((a, b) => data.outcomes[a.outcome].rank - data.outcomes[b.outcome].rank
+      || data.outcomes[a.healthOutcome].rank - data.outcomes[b.healthOutcome].rank
+      || (b.commission ? b.commission.rate : -1) - (a.commission ? a.commission.rate : -1)
+      || a.carrier.name.localeCompare(b.carrier.name));
 
-    renderResults(results, { age, feet, inches, height, weight, tobacco, chosen });
+    renderResults(results, { age, feet, inches, height, weight, tobacco, chosen, commission });
   }
 
   function renderResults(results, profile) {
@@ -214,6 +328,10 @@
     profileText.textContent = `${text().profile}: ${profile.age} · ${profile.feet}'${profile.inches}\" · ${profile.weight} lb · ${text().tobaccoLabel}: ${profile.tobacco ? text().yes : text().no} · ${results.length} ${text().options}`;
     summary.append(heading, profileText);
     container.appendChild(summary);
+    const priorityNote = document.createElement("p");
+    priorityNote.className = "source-language-note";
+    priorityNote.textContent = text().approvalFirst;
+    container.appendChild(priorityNote);
 
     const list = document.createElement("div");
     list.className = "underwriting-results";
@@ -221,6 +339,7 @@
       const outcome = data.outcomes[result.outcome];
       const card = document.createElement("article");
       card.className = "uw-result";
+      card.dataset.outcome = result.outcome;
       card.style.setProperty("--outcome", outcome.color);
       const main = document.createElement("div");
       main.className = "uw-result-main";
@@ -239,6 +358,54 @@
       tier.textContent = text()[result.outcome];
       main.append(rank, carrier, reason, tier);
       card.appendChild(main);
+
+      if (profile.commission && result.commission) {
+        const comp = document.createElement("div");
+        comp.className = "uw-comp-card";
+        const productControl = document.createElement("div");
+        const productLabel = document.createElement("label");
+        productLabel.textContent = text().compProduct;
+        const productSelect = document.createElement("select");
+        productSelect.className = "uw-comp-product";
+        productSelect.setAttribute("aria-label", `${text().compProduct}: ${result.carrier.name}`);
+        result.commission.products.forEach((product) => {
+          const option = document.createElement("option");
+          option.value = product.id;
+          option.textContent = product.variant ? `${product.name} — ${product.variant}` : product.name;
+          productSelect.appendChild(option);
+        });
+        productSelect.value = result.commission.product.id;
+        productSelect.addEventListener("change", () => {
+          selectedCompProducts.set(result.carrier.id, productSelect.value);
+          evaluate();
+        });
+        productControl.append(productLabel, productSelect);
+
+        const rateBlock = document.createElement("div");
+        rateBlock.className = "uw-comp-value";
+        const rateLabel = document.createElement("span");
+        rateLabel.textContent = text().compRate;
+        const rate = document.createElement("strong");
+        rate.className = "uw-comp-rate";
+        rate.textContent = formatRate(result.commission.rate);
+        rateBlock.append(rateLabel, rate);
+
+        const earningsBlock = document.createElement("div");
+        earningsBlock.className = "uw-comp-value";
+        const earningsLabel = document.createElement("span");
+        earningsLabel.textContent = text().estimatedEarnings;
+        const earnings = document.createElement("strong");
+        earnings.className = "uw-comp-earnings";
+        earnings.textContent = formatMoney(profile.commission.premium * result.commission.rate / 100);
+        earningsBlock.append(earningsLabel, earnings);
+        comp.append(productControl, rateBlock, earningsBlock);
+        card.appendChild(comp);
+      } else if (profile.commission) {
+        const unavailable = document.createElement("p");
+        unavailable.className = "uw-comp-unavailable";
+        unavailable.textContent = text().missingComp;
+        card.appendChild(unavailable);
+      }
 
       const details = document.createElement("details");
       const summary = document.createElement("summary");
@@ -288,12 +455,18 @@
     renderSelectedConditions();
   });
   $("uw-run").addEventListener("click", evaluate);
+  $("uw-comp-level").addEventListener("change", () => { if (hasEvaluated) evaluate(); });
+  $("uw-comp-ap").addEventListener("input", () => { if (hasEvaluated) evaluate(); });
   $("uw-clear").addEventListener("click", () => {
-    ["uw-age", "uw-feet", "uw-inches", "uw-weight"].forEach((id) => { $(id).value = ""; });
+    ["uw-age", "uw-feet", "uw-inches", "uw-weight", "uw-comp-ap"].forEach((id) => { $(id).value = ""; });
     $("uw-tobacco").value = "no";
+    $("uw-comp-level").value = "";
     selectedConditions.clear();
+    selectedCompProducts.clear();
+    hasEvaluated = false;
     renderSelectedConditions();
     $("uw-validation").textContent = "";
+    $("uw-comp-validation").textContent = "";
     $("uw-results").className = "finder-empty";
     $("uw-results").textContent = text().empty;
   });

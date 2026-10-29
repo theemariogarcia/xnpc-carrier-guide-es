@@ -2,9 +2,10 @@
 
 Herramienta interna bilingüe para que los representantes:
 
-- comparen opciones preliminares de suscripción;
+- comparen opciones preliminares de suscripción, priorizadas primero por viabilidad de aprobación;
 - consulten opciones por estatus migratorio y perfil de salud;
-- estimen la compensación bruta del primer año por carrier y producto usando su nivel de comp FFL y la prima anual oficial.
+- calculen la compensación bruta estimada dentro de los mismos resultados de suscripción, usando su nivel de comp FFL y la prima anual oficial;
+- consulten también el comparador completo de compensación por carrier y producto.
 
 Sitio público: https://theemariogarcia.github.io/xnpc-carrier-guide-es/
 
