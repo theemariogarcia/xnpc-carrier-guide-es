@@ -19,6 +19,7 @@
       empty: "Enter a comp level and annual premium to see estimated earnings by carrier and product.",
       invalidPremium: "Enter an annual premium greater than $0.",
       summary: "Estimated first-year compensation",
+      ranking: "Highest commission to lowest",
       compared: "products compared",
       rate: "Comp rate",
       earnings: "Estimated earnings",
@@ -38,6 +39,7 @@
       empty: "Ingresa el nivel de comp y la prima anual para ver el ingreso estimado por carrier y producto.",
       invalidPremium: "Ingresa una prima anual mayor de $0.",
       summary: "Compensación estimada del primer año",
+      ranking: "Mayor comisión a menor comisión",
       compared: "productos comparados",
       rate: "Tasa de comp",
       earnings: "Ingreso estimado",
@@ -134,27 +136,32 @@
     summary.append(heading, profile);
     results.appendChild(summary);
 
-    carriers.forEach((carrier) => {
-      const section = document.createElement("section");
-      section.className = "comp-carrier-group";
-      const title = document.createElement("h3");
-      title.textContent = carrier.name;
-      const grid = document.createElement("div");
-      grid.className = "comp-result-grid";
-      carrier.products.forEach((product) => {
-        const rate = product.rates[level];
+    const choices = carriers.flatMap((carrier) => carrier.products.map((product) => ({
+      carrier,
+      product,
+      rate: product.rates[level]
+    }))).sort((a, b) => b.rate - a.rate
+      || a.carrier.name.localeCompare(b.carrier.name)
+      || a.product.name.localeCompare(b.product.name)
+      || a.product.variant.localeCompare(b.product.variant));
+
+    const section = document.createElement("section");
+    section.className = "comp-carrier-group";
+    const title = document.createElement("h3");
+    title.textContent = selectedCarrier ? carriers[0].name : text().ranking;
+    const grid = document.createElement("div");
+    grid.className = "comp-result-grid";
+    choices.forEach(({ carrier, product, rate }) => {
         const card = document.createElement("article");
         card.className = "comp-result";
         const identity = document.createElement("div");
         identity.className = "comp-product";
         const name = document.createElement("strong");
-        name.textContent = product.name;
+        name.textContent = carrier.name;
         identity.appendChild(name);
-        if (product.variant) {
-          const variant = document.createElement("span");
-          variant.textContent = product.variant;
-          identity.appendChild(variant);
-        }
+        const productLabel = document.createElement("span");
+        productLabel.textContent = product.variant ? `${product.name} · ${product.variant}` : product.name;
+        identity.appendChild(productLabel);
         const rateBlock = document.createElement("div");
         rateBlock.className = "comp-metric";
         const rateLabel = document.createElement("span");
@@ -173,10 +180,9 @@
         earningsBlock.append(earningsLabel, earningsValue);
         card.append(identity, rateBlock, earningsBlock);
         grid.appendChild(card);
-      });
-      section.append(title, grid);
-      results.appendChild(section);
     });
+    section.append(title, grid);
+    results.appendChild(section);
   }
 
   function applyLanguage() {

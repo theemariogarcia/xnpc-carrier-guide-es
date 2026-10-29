@@ -396,10 +396,9 @@
     .comp-summary { margin: 0; }
     .comp-carrier-group { overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.018); }
     .comp-carrier-group > h3 { margin: 0; padding: 13px 16px; color: #b9baff; border-bottom: 1px solid var(--line); background: rgba(139,140,255,.055); font-size: 14px; font-weight: 600; }
-    .comp-result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .comp-result-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
     .comp-result { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 18px; align-items: center; min-width: 0; padding: 15px 16px; border-bottom: 1px solid var(--line); }
-    .comp-result:nth-child(odd) { border-right: 1px solid var(--line); }
-    .comp-result-grid .comp-result:nth-last-child(-n+2) { border-bottom: 0; }
+    .comp-result:last-child { border-bottom: 0; }
     .comp-product { min-width: 0; }
     .comp-product strong, .comp-product span { display: block; }
     .comp-product strong { color: #f4f6fb; font-size: 13px; font-weight: 590; }
