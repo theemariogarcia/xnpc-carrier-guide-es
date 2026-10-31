@@ -18,7 +18,7 @@
       finderEyebrow: "ONE-PASS 2026 PRE-SCREEN", finderTitle: "Unified Life Placement Finder",
       finderLead: "Enter the client once. Results are organized in the order to explore: IUL first, then Whole Life, then Term Life.",
       producerOnly: "Producer use only", statusLabel: "Immigration / ID status", ageLabel: "Age", feetLabel: "Height — feet", inchesLabel: "Height — inches", weightLabel: "Weight (lb)", tobaccoLabel: "Tobacco use", no: "No", yes: "Yes",
-      conditionLabel: "Health condition", chooseCondition: "Choose a condition", addCondition: "Add condition", clear: "Clear", rankOptions: "Show qualification paths",
+      conditionLabel: "Health condition", chooseCondition: "Choose a condition", addCondition: "Add condition", clear: "Clear", rankOptions: "Show qualification paths", liveQuote: "Run live Spark quote →",
       empty: "Enter age, height, and weight to compare IUL, Whole Life, and Term options.", sourceNote: "Preliminary field guidance from the uploaded 2026 IUL/Term and Final Expense/Whole Life grids. Exact source wording is shown in each result.",
       required: "Enter a valid age, height, and weight.", details: "View underwriting details", noConditions: "No health condition selected", remove: "Remove",
       commissionOption: "Optional: add commission estimate", compLevel: "FFL comp level", annualPremium: "Annual premium", chooseComp: "Select comp level",
@@ -31,7 +31,7 @@
       finderEyebrow: "PRE-EVALUACIÓN ÚNICA 2026", finderTitle: "Buscador unificado de colocación",
       finderLead: "Ingresa al cliente una sola vez. Los resultados se organizan en el orden a explorar: primero IUL, después Whole Life y al final Term Life.",
       producerOnly: "Solo para productores", statusLabel: "Estatus migratorio / identificación", ageLabel: "Edad", feetLabel: "Estatura — pies", inchesLabel: "Estatura — pulgadas", weightLabel: "Peso (lb)", tobaccoLabel: "Uso de tabaco", no: "No", yes: "Sí",
-      conditionLabel: "Condición de salud", chooseCondition: "Selecciona una condición", addCondition: "Agregar condición", clear: "Limpiar", rankOptions: "Mostrar rutas de calificación",
+      conditionLabel: "Condición de salud", chooseCondition: "Selecciona una condición", addCondition: "Agregar condición", clear: "Limpiar", rankOptions: "Mostrar rutas de calificación", liveQuote: "Generar cotización en vivo con Spark →",
       empty: "Ingresa edad, estatura y peso para comparar opciones IUL, Whole Life y Term.", sourceNote: "Guía preliminar basada en las tablas 2026 cargadas de IUL/Term y Final Expense/Whole Life. Cada resultado muestra el texto exacto de la fuente.",
       required: "Ingresa una edad, estatura y peso válidos.", details: "Ver detalles de suscripción", noConditions: "Sin condición de salud seleccionada", remove: "Quitar",
       commissionOption: "Opcional: agregar estimado de comisión", compLevel: "Nivel de comp FFL", annualPremium: "Prima anual", chooseComp: "Selecciona nivel de comp",
@@ -241,6 +241,7 @@
       return { product, parts, overall:overall.outcome, commission:commissionFor(product, level, premium) };
     }).sort((a,b) => categoryOrder[a.product.category] - categoryOrder[b.product.category] || ranks[a.overall] - ranks[b.overall] || a.product.name.localeCompare(b.product.name));
     renderResults(results, { age, feet, inches, weight, tobacco, status });
+    $("live-quote-wrap").hidden = false;
   }
 
   function money(value) { return new Intl.NumberFormat(language() === "es" ? "es-US" : "en-US", { style:"currency", currency:"USD", maximumFractionDigits:2 }).format(value); }
@@ -292,7 +293,7 @@
   $("uw-comp-ap").addEventListener("input", () => { if (hasEvaluated) evaluate(); });
   $("uw-clear").addEventListener("click", () => {
     ["uw-age","uw-feet","uw-inches","uw-weight","uw-comp-ap"].forEach((id) => { $(id).value=""; });
-    $("uw-status").value=""; $("uw-tobacco").value="no"; $("uw-comp-level").value=""; selectedConditions.clear(); hasEvaluated=false; renderSelectedConditions(); $("uw-validation").textContent=""; $("uw-results").className="finder-empty"; $("uw-results").textContent=text().empty;
+    $("uw-status").value=""; $("uw-tobacco").value="no"; $("uw-comp-level").value=""; selectedConditions.clear(); hasEvaluated=false; renderSelectedConditions(); $("uw-validation").textContent=""; $("uw-results").className="finder-empty"; $("uw-results").textContent=text().empty; $("live-quote-wrap").hidden=true;
   });
   $("language").addEventListener("change", setLanguage);
   setLanguage();
