@@ -2,10 +2,11 @@
 
 Herramienta interna bilingüe para que los representantes:
 
-- comparen opciones preliminares de suscripción, priorizadas primero por viabilidad de aprobación;
-- consulten opciones por estatus migratorio y perfil de salud;
-- calculen la compensación bruta estimada dentro de los mismos resultados de suscripción, usando su nivel de comp FFL y la prima anual oficial;
-- consulten también el comparador completo de compensación por carrier y producto.
+- ingresen el perfil del cliente una sola vez (estatus migratorio/ID, edad, estatura, peso, tabaco y condiciones);
+- revisen rutas preliminares en el orden de colocación: IUL primero, Whole Life después y Term Life al final;
+- comparen 18 rutas de producto contra 65 condiciones unificadas de las guías 2026;
+- consulten el detalle exacto de cada regla de suscripción y el rango de complexión aplicable;
+- calculen opcionalmente la compensación bruta estimada usando su nivel de comp FFL y la prima anual oficial.
 
 Sitio público: https://theemariogarcia.github.io/xnpc-carrier-guide-es/
 

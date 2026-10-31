@@ -402,6 +402,21 @@
     .uw-comp-value strong { margin-top: 3px; color: #cfd3df; font-size: 14px; white-space: nowrap; }
     .uw-comp-value .uw-comp-earnings { color: #63d8ff; font-size: 18px; }
     .uw-comp-unavailable { margin: 0; padding: 11px 16px; color: #7f8799; border-top: 1px solid rgba(255,255,255,.06); font-size: 11px; }
+
+    .qualification-results { display: grid; gap: 20px; }
+    .profile-summary { padding: 12px 16px; color: #b9c0d2; border: 1px solid rgba(99,216,255,.14); border-radius: 10px; background: rgba(99,216,255,.035); font-size: 12px; }
+    .qualification-group { display: grid; gap: 10px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.018); }
+    .qualification-group-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; padding: 0 2px 6px; }
+    .qualification-group-head h3 { margin: 0; color: #f5f7ff; font-size: 20px; font-weight: 580; letter-spacing: -.025em; }
+    .qualification-group-head p { max-width: 720px; margin: 5px 0 0; color: #858ca0; font-size: 12px; }
+    .qualification-count { padding: 6px 10px; color: #b9baff; border: 1px solid rgba(139,140,255,.22); border-radius: 999px; background: rgba(139,140,255,.07); font-size: 10px; white-space: nowrap; }
+    .category-empty { margin: 0; padding: 10px 12px; color: #d3aeb0; border-left: 2px solid #a72b22; background: rgba(167,43,34,.07); font-size: 12px; }
+    .uw-result.is-decline { opacity: .64; }
+    .result-status { display: grid; gap: 6px; }
+    .result-status small { color: #9298aa; font-size: 11px; line-height: 1.35; }
+    .outcome-pill { width: fit-content; padding: 4px 8px; color: #fff; border-radius: 999px; background: color-mix(in srgb, var(--outcome) 72%, #111); font-size: 10px; font-weight: 650; }
+    .result-meta { display: grid; gap: 3px; min-width: 190px; color: #7f8799; font-size: 10px; text-align: right; }
+    .unified-comp { padding: 9px 16px; color: #9fdff1; border-top: 1px solid rgba(99,216,255,.12); background: rgba(99,216,255,.025); font-size: 11px; }
     .comp-panel { margin-bottom: 22px; padding: 22px; border: 1px solid rgba(99,216,255,.18); border-radius: var(--radius); background: linear-gradient(145deg, rgba(99,216,255,.06), rgba(139,140,255,.025)); box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.04); }
     .comp-input-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
     .comp-results { display: grid; gap: 18px; }
@@ -440,7 +455,10 @@
       .uw-comp-card { grid-template-columns: 1fr 1fr; }
       .uw-comp-card > div:first-child { grid-column: 1 / -1; }
       .uw-result-main { grid-template-columns: 42px 1fr; gap: 10px; }
-      .result-reason, .result-tier { grid-column: 2; justify-self: start; }
+      .result-reason, .result-tier, .result-status, .result-meta { grid-column: 2; justify-self: start; }
+      .result-meta { min-width: 0; text-align: left; }
+      .qualification-group-head { flex-direction: column; }
+      .qualification-count { align-self: flex-start; }
       button { width: 100%; }
       .condition-chip button { width: auto; }
       .summary { grid-template-columns: 1fr; gap: 10px; }
@@ -516,24 +534,19 @@
       </div>
     </section>
 
-    <nav class="tool-tabs" aria-label="Guide tools">
-      <button class="tool-tab active" type="button" data-panel="underwriting-finder" data-uw-i18n="finderTab">Underwriting Finder</button>
-      <button class="tool-tab" type="button" data-panel="placement-guide" data-uw-i18n="placementTab">Immigration & Product Guide</button>
-      <button class="tool-tab" type="button" data-panel="compensation-calculator" data-comp-i18n="tab">Compensation Calculator</button>
-    </nav>
-
     <section id="underwriting-finder" class="tool-panel" aria-labelledby="finder-title">
       <div class="finder-panel">
         <div class="finder-heading">
           <div>
-            <p class="eyebrow" data-uw-i18n="finderEyebrow">2026 PRE-SCREEN</p>
-            <h2 id="finder-title" data-uw-i18n="finderTitle">Final Expense Underwriting Finder</h2>
-            <p data-uw-i18n="finderLead">Enter the client profile and add one or more health conditions. Options are ranked from best to worst using the guide’s original color system.</p>
+            <p class="eyebrow" data-uw-i18n="finderEyebrow">ONE-PASS 2026 PRE-SCREEN</p>
+            <h2 id="finder-title" data-uw-i18n="finderTitle">Unified Life Placement Finder</h2>
+            <p data-uw-i18n="finderLead">Enter the client once. Results are organized in the order to explore: IUL first, then Whole Life, then Term Life.</p>
           </div>
           <span class="internal-badge" data-uw-i18n="producerOnly">Producer use only</span>
         </div>
 
         <div class="finder-grid">
+          <div><label for="uw-status" data-uw-i18n="statusLabel">Immigration / ID status</label><select id="uw-status"></select></div>
           <div><label for="uw-age" data-uw-i18n="ageLabel">Age</label><input id="uw-age" type="number" min="18" max="99" inputmode="numeric" placeholder="65"></div>
           <div><label for="uw-feet" data-uw-i18n="feetLabel">Height — feet</label><input id="uw-feet" type="number" min="4" max="6" inputmode="numeric" placeholder="5"></div>
           <div><label for="uw-inches" data-uw-i18n="inchesLabel">Height — inches</label><input id="uw-inches" type="number" min="0" max="11" inputmode="numeric" placeholder="8"></div>
@@ -553,13 +566,13 @@
           </div>
           <div id="uw-comp-validation" class="source-language-note" role="alert"></div>
         </div>
-        <div class="finder-actions"><button id="uw-clear" type="button" data-uw-i18n="clear">Clear</button><button id="uw-run" class="primary-action" type="button" data-uw-i18n="rankOptions">Rank options</button></div>
+        <div class="finder-actions"><button id="uw-clear" type="button" data-uw-i18n="clear">Clear</button><button id="uw-run" class="primary-action" type="button" data-uw-i18n="rankOptions">Show qualification paths</button></div>
         <div id="uw-validation" class="source-language-note" role="alert"></div>
       </div>
 
       <div id="uw-legend" class="outcome-legend" aria-label="Outcome color legend"></div>
-      <div id="uw-results" class="finder-empty" data-uw-i18n="empty">Enter age, height, and weight to compare carriers.</div>
-      <p class="source-language-note" data-uw-i18n="sourceNote">Carrier rule details currently preserve the exact English source wording from the uploaded 2026 guide.</p>
+      <div id="uw-results" class="finder-empty" data-uw-i18n="empty">Enter age, height, and weight to compare IUL, Whole Life, and Term options.</div>
+      <p class="source-language-note" data-uw-i18n="sourceNote">Preliminary field guidance from the uploaded 2026 IUL/Term and Final Expense/Whole Life grids. Exact source wording is shown in each result.</p>
     </section>
 
     <section id="compensation-calculator" class="tool-panel" hidden aria-labelledby="comp-title">
@@ -622,6 +635,7 @@
   </main>
 
   <script src="underwriting-data.js"></script>
+  <script src="iul-term-data.js"></script>
   <script src="compensation-data.js"></script>
   <script>
     const entries = [
