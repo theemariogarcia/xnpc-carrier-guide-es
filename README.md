@@ -2,7 +2,7 @@
 
 Herramienta interna bilingüe para que los representantes:
 
-- ingresen el perfil del cliente una sola vez (estatus migratorio/ID, edad, estatura, peso, tabaco y condiciones);
+- ingresen el perfil del cliente una sola vez (estatus migratorio/ID, sexo, edad, estatura, peso, tabaco y condiciones);
 - revisen rutas preliminares en el orden de colocación: IUL primero, Whole Life después y Term Life al final;
 - comparen 18 rutas de producto contra 65 condiciones unificadas de las guías 2026;
 - consulten el detalle exacto de cada regla de suscripción y el rango de complexión aplicable;

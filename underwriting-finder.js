@@ -17,27 +17,27 @@
     en: {
       finderEyebrow: "ONE-PASS 2026 PRE-SCREEN", finderTitle: "Unified Life Placement Finder",
       finderLead: "Enter the client once. Results are organized in the order to explore: IUL first, then Whole Life, then Term Life.",
-      producerOnly: "Producer use only", statusLabel: "Immigration / ID status", ageLabel: "Age", feetLabel: "Height — feet", inchesLabel: "Height — inches", weightLabel: "Weight (lb)", tobaccoLabel: "Tobacco use", no: "No", yes: "Yes",
+      producerOnly: "Producer use only", statusLabel: "Immigration / ID status", genderLabel: "Sex", male: "Male", female: "Female", chooseGender: "Select sex", ageLabel: "Age", feetLabel: "Height — feet", inchesLabel: "Height — inches", weightLabel: "Weight (lb)", tobaccoLabel: "Tobacco use", no: "No", yes: "Yes",
       conditionLabel: "Health condition", chooseCondition: "Choose a condition", addCondition: "Add condition", clear: "Clear", rankOptions: "Show qualification paths", liveQuote: "Run live Spark quote →",
       empty: "Enter age, height, and weight to compare IUL, Whole Life, and Term options.", sourceNote: "Preliminary field guidance from the uploaded 2026 IUL/Term and Final Expense/Whole Life grids. Exact source wording is shown in each result.",
-      required: "Enter a valid age, height, and weight.", details: "View underwriting details", noConditions: "No health condition selected", remove: "Remove",
+      required: "Select male or female and enter a valid age, height, and weight.", details: "View underwriting details", noConditions: "No health condition selected", remove: "Remove",
       commissionOption: "Optional: add commission estimate", compLevel: "FFL comp level", annualPremium: "Annual premium", chooseComp: "Select comp level",
       favorable: "Potential fit", limited: "Rated / modified route", gi: "Guaranteed-issue route", verify: "Verify before submission", na: "Not asked / unavailable", crossref: "See related rule", decline: "Not a fit from this guide",
       iul: "1 · IUL first", whole: "2 · Whole Life next", term: "3 · Term Life fallback", iulNote: "Start here when the profile supports an indexed universal life route.", wholeNote: "If IUL is not a clear fit, review permanent Whole Life / Final Expense options.", termNote: "Use Term when it is the better remaining fit for the client’s need and profile.",
-      noViable: "No clear route in this category from the selected information.", preliminary: "Preliminary match", profile: "Client profile", build: "Build", health: "Health", status: "Status", age: "Age", commission: "Estimated first-year gross", compUnavailable: "No matching compensation schedule loaded", verifyStatus: "Verify immigration / ID eligibility", sourceRule: "Source rule", options: "options",
+      noViable: "No clear route in this category from the selected information.", preliminary: "Preliminary match", profile: "Client profile", gender: "Sex", build: "Build", health: "Health", status: "Status", age: "Age", commission: "Estimated first-year gross", compUnavailable: "No matching compensation schedule loaded", verifyStatus: "Verify immigration / ID eligibility", sourceRule: "Source rule", options: "options",
       statusOptions: { "":"Select status", citizen:"U.S. citizen / Permanent resident", ssn_only:"Work permit + SSN with valid ID", itin_license:"ITIN + U.S. driver's license", itin_passport:"ITIN + passport", no_ssn_no_itin:"No SSN or ITIN" }
     },
     es: {
       finderEyebrow: "PRE-EVALUACIÓN ÚNICA 2026", finderTitle: "Buscador unificado de colocación",
       finderLead: "Ingresa al cliente una sola vez. Los resultados se organizan en el orden a explorar: primero IUL, después Whole Life y al final Term Life.",
-      producerOnly: "Solo para productores", statusLabel: "Estatus migratorio / identificación", ageLabel: "Edad", feetLabel: "Estatura — pies", inchesLabel: "Estatura — pulgadas", weightLabel: "Peso (lb)", tobaccoLabel: "Uso de tabaco", no: "No", yes: "Sí",
+      producerOnly: "Solo para productores", statusLabel: "Estatus migratorio / identificación", genderLabel: "Sexo", male: "Masculino", female: "Femenino", chooseGender: "Selecciona sexo", ageLabel: "Edad", feetLabel: "Estatura — pies", inchesLabel: "Estatura — pulgadas", weightLabel: "Peso (lb)", tobaccoLabel: "Uso de tabaco", no: "No", yes: "Sí",
       conditionLabel: "Condición de salud", chooseCondition: "Selecciona una condición", addCondition: "Agregar condición", clear: "Limpiar", rankOptions: "Mostrar rutas de calificación", liveQuote: "Generar cotización en vivo con Spark →",
       empty: "Ingresa edad, estatura y peso para comparar opciones IUL, Whole Life y Term.", sourceNote: "Guía preliminar basada en las tablas 2026 cargadas de IUL/Term y Final Expense/Whole Life. Cada resultado muestra el texto exacto de la fuente.",
-      required: "Ingresa una edad, estatura y peso válidos.", details: "Ver detalles de suscripción", noConditions: "Sin condición de salud seleccionada", remove: "Quitar",
+      required: "Selecciona masculino o femenino e ingresa una edad, estatura y peso válidos.", details: "Ver detalles de suscripción", noConditions: "Sin condición de salud seleccionada", remove: "Quitar",
       commissionOption: "Opcional: agregar estimado de comisión", compLevel: "Nivel de comp FFL", annualPremium: "Prima anual", chooseComp: "Selecciona nivel de comp",
       favorable: "Posible opción", limited: "Ruta con clasificación / modificada", gi: "Ruta de emisión garantizada", verify: "Verificar antes de enviar", na: "No preguntado / no disponible", crossref: "Ver regla relacionada", decline: "No encaja según esta guía",
       iul: "1 · Primero IUL", whole: "2 · Después Whole Life", term: "3 · Term Life como alternativa", iulNote: "Empieza aquí cuando el perfil admite una ruta de vida universal indexada.", wholeNote: "Si IUL no es una opción clara, revisa Whole Life permanente / gastos finales.", termNote: "Usa Term cuando sea la mejor opción restante para la necesidad y el perfil del cliente.",
-      noViable: "No hay una ruta clara en esta categoría con la información seleccionada.", preliminary: "Coincidencia preliminar", profile: "Perfil del cliente", build: "Complexión", health: "Salud", status: "Estatus", age: "Edad", commission: "Bruto estimado del primer año", compUnavailable: "No hay tabla de compensación correspondiente cargada", verifyStatus: "Verificar elegibilidad migratoria / de identificación", sourceRule: "Regla fuente", options: "opciones",
+      noViable: "No hay una ruta clara en esta categoría con la información seleccionada.", preliminary: "Coincidencia preliminar", profile: "Perfil del cliente", gender: "Sexo", build: "Complexión", health: "Salud", status: "Estatus", age: "Edad", commission: "Bruto estimado del primer año", compUnavailable: "No hay tabla de compensación correspondiente cargada", verifyStatus: "Verificar elegibilidad migratoria / de identificación", sourceRule: "Regla fuente", options: "opciones",
       statusOptions: { "":"Selecciona estatus", citizen:"Ciudadano / Residente permanente", ssn_only:"Permiso de trabajo + Seguro Social con ID vigente", itin_license:"ITIN + licencia de EE. UU.", itin_passport:"ITIN + pasaporte", no_ssn_no_itin:"Sin SSN ni ITIN" }
     }
   };
@@ -77,6 +77,7 @@
       if (value) element.textContent = value;
     });
     populateStatus();
+    populateGender();
     populateConditions();
     populateCompLevels();
     renderSelectedConditions();
@@ -90,6 +91,17 @@
     const previous = select.value;
     select.innerHTML = "";
     Object.entries(text().statusOptions).forEach(([value, label]) => {
+      const option = document.createElement("option"); option.value = value; option.textContent = label; select.appendChild(option);
+    });
+    select.value = previous;
+  }
+
+  function populateGender() {
+    const select = $("uw-gender");
+    if (!select) return;
+    const previous = select.value;
+    select.innerHTML = "";
+    [["", text().chooseGender], ["M", text().male], ["F", text().female]].forEach(([value, label]) => {
       const option = document.createElement("option"); option.value = value; option.textContent = label; select.appendChild(option);
     });
     select.value = previous;
@@ -227,9 +239,9 @@
 
   function evaluate() {
     const age = Number($("uw-age").value), feet = Number($("uw-feet").value), inches = Number($("uw-inches").value), weight = Number($("uw-weight").value);
-    const tobacco = $("uw-tobacco").value === "yes", status = $("uw-status").value;
+    const tobacco = $("uw-tobacco").value === "yes", status = $("uw-status").value, gender = $("uw-gender").value;
     const validation = $("uw-validation");
-    if (!Number.isFinite(age) || age <= 0 || !Number.isFinite(feet) || feet < 4 || !Number.isFinite(inches) || inches < 0 || inches > 11 || !Number.isFinite(weight) || weight <= 0) { validation.textContent = text().required; return; }
+    if (!["M","F"].includes(gender) || !Number.isFinite(age) || age <= 0 || !Number.isFinite(feet) || feet < 4 || !Number.isFinite(inches) || inches < 0 || inches > 11 || !Number.isFinite(weight) || weight <= 0) { validation.textContent = text().required; return; }
     validation.textContent = ""; hasEvaluated = true;
     const height = feet * 12 + inches;
     const level = $("uw-comp-level").value;
@@ -240,7 +252,8 @@
       const overall = worst(Object.values(parts));
       return { product, parts, overall:overall.outcome, commission:commissionFor(product, level, premium) };
     }).sort((a,b) => categoryOrder[a.product.category] - categoryOrder[b.product.category] || ranks[a.overall] - ranks[b.overall] || a.product.name.localeCompare(b.product.name));
-    renderResults(results, { age, feet, inches, weight, tobacco, status });
+    renderResults(results, { age, feet, inches, weight, tobacco, status, gender });
+    $("live-quote-link").setAttribute("href", `https://app.runspark.ai/quote/RlkZbQSO6YuWrU2D3DDsfkzTchiNXkXn5Ucqa7s371g?gender=${gender}&age=${age}&tobacco=${tobacco}`);
     $("live-quote-wrap").hidden = false;
   }
 
@@ -249,7 +262,7 @@
   function renderResults(results, profile) {
     const container = $("uw-results"); container.className = "qualification-results"; container.innerHTML = "";
     const summary = document.createElement("div"); summary.className = "profile-summary";
-    summary.textContent = `${text().profile}: ${profile.age} · ${profile.feet}'${profile.inches}\" · ${profile.weight} lb · ${profile.tobacco ? text().yes : text().no} tobacco · ${profile.status ? text().statusOptions[profile.status] : text().verifyStatus}`;
+    summary.textContent = `${text().profile}: ${profile.gender === "F" ? text().female : text().male} · ${profile.age} · ${profile.feet}'${profile.inches}\" · ${profile.weight} lb · ${profile.tobacco ? text().yes : text().no} tobacco · ${profile.status ? text().statusOptions[profile.status] : text().verifyStatus}`;
     container.appendChild(summary);
     ["iul","whole","term"].forEach((category) => {
       const categoryResults = results.filter((item) => item.product.category === category);
@@ -289,11 +302,11 @@
 
   $("uw-add-condition").addEventListener("click", () => { const key=$("uw-condition").value; if (key) selectedConditions.add(key); $("uw-condition").value=""; renderSelectedConditions(); if (hasEvaluated) evaluate(); });
   $("uw-run").addEventListener("click", evaluate);
-  ["uw-status","uw-tobacco","uw-comp-level"].forEach((id) => $(id).addEventListener("change", () => { if (hasEvaluated) evaluate(); }));
+  ["uw-status","uw-gender","uw-tobacco","uw-comp-level"].forEach((id) => $(id).addEventListener("change", () => { if (hasEvaluated) evaluate(); }));
   $("uw-comp-ap").addEventListener("input", () => { if (hasEvaluated) evaluate(); });
   $("uw-clear").addEventListener("click", () => {
     ["uw-age","uw-feet","uw-inches","uw-weight","uw-comp-ap"].forEach((id) => { $(id).value=""; });
-    $("uw-status").value=""; $("uw-tobacco").value="no"; $("uw-comp-level").value=""; selectedConditions.clear(); hasEvaluated=false; renderSelectedConditions(); $("uw-validation").textContent=""; $("uw-results").className="finder-empty"; $("uw-results").textContent=text().empty; $("live-quote-wrap").hidden=true;
+    $("uw-status").value=""; $("uw-gender").value=""; $("uw-tobacco").value="no"; $("uw-comp-level").value=""; selectedConditions.clear(); hasEvaluated=false; renderSelectedConditions(); $("uw-validation").textContent=""; $("uw-results").className="finder-empty"; $("uw-results").textContent=text().empty; $("live-quote-wrap").hidden=true;
   });
   $("language").addEventListener("change", setLanguage);
   setLanguage();
