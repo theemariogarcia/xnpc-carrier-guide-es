@@ -44,7 +44,7 @@
 
   const conditionEs = {
     "AFib / Arrhythmia":"Fibrilación auricular / Arritmia", "AFib / Irregular Heartbeat":"Fibrilación auricular / Ritmo irregular", "AIDS / HIV / ARC":"SIDA / VIH / ARC", "Alcohol / Drug Abuse":"Abuso de alcohol / drogas", "ALS (Lou Gehrig’s)":"ELA (Lou Gehrig)", "Alzheimer’s / Dementia":"Alzheimer / Demencia", "Amputation":"Amputación", "Aneurysm":"Aneurisma", "Angina (Chest Pain)":"Angina (dolor de pecho)", "Angioplasty / Stent":"Angioplastia / Stent", "Angioplasty":"Angioplastia", "Anxiety":"Ansiedad", "Arthritis (RA)":"Artritis reumatoide", "Arthritis (incl. RA)":"Artritis (incl. AR)", "Asthma":"Asma", "Asthma (Chronic)":"Asma crónica", "Autism":"Autismo", "Bipolar Disorder":"Trastorno bipolar", "Blood Clots / DVT":"Coágulos / TVP", "Bronchitis / COPD":"Bronquitis / EPOC", "Cancer (not Basal Cell)":"Cáncer (no basocelular)", "Cardiomyopathy":"Cardiomiopatía", "Cardiomyopathy / Heart Disease":"Cardiomiopatía / Enfermedad cardíaca", "Cerebral Palsy":"Parálisis cerebral", "CHF":"Insuficiencia cardíaca", "CHF / Diastolic HF":"Insuficiencia cardíaca / IC diastólica", "Chronic Pain (Narcotics)":"Dolor crónico (narcóticos)", "Cirrhosis":"Cirrosis", "Coronary Artery Disease":"Enfermedad arterial coronaria", "Crohn’s Disease":"Enfermedad de Crohn", "Depression":"Depresión", "Diabetes (Type 1 / Type 2)":"Diabetes (tipo 1 / tipo 2)", "Diabetic Complications":"Complicaciones diabéticas", "Disability (Currently Receiving)":"Discapacidad (recibiendo beneficios)", "Down’s Syndrome":"Síndrome de Down", "DUI / Reckless Driving":"DUI / Conducción imprudente", "Emphysema":"Enfisema", "Epilepsy / Seizures":"Epilepsia / Convulsiones", "Felony / Criminal":"Delito grave / Historial criminal", "Heart Attack":"Ataque cardíaco", "Heart Attack (MI)":"Ataque cardíaco (infarto)", "Heart Surgery (CABG / Valve)":"Cirugía cardíaca (bypass / válvula)", "Hepatitis B / C":"Hepatitis B / C", "High Blood Pressure":"Presión alta", "Kidney Disease / Failure / Dialysis":"Enfermedad renal / Diálisis", "Liver Disease":"Enfermedad hepática", "Melanoma":"Melanoma", "Mental Incapacity":"Incapacidad mental", "Multiple Sclerosis":"Esclerosis múltiple", "Muscular Dystrophy":"Distrofia muscular", "Organ / Bone Marrow Transplant":"Trasplante de órgano / médula", "Oxygen Use":"Uso de oxígeno", "Pacemaker / Defibrillator":"Marcapasos / Desfibrilador", "PAD / PVD":"EAP / EVP", "Pancreatitis":"Pancreatitis", "Parkinson’s Disease":"Enfermedad de Parkinson", "PTSD":"TEPT", "Pulmonary Fibrosis":"Fibrosis pulmonar", "Sarcoidosis":"Sarcoidosis", "Schizophrenia / Psychosis":"Esquizofrenia / Psicosis", "Sickle Cell Anemia":"Anemia falciforme", "Sleep Apnea":"Apnea del sueño", "Sleep Apnea (CPAP)":"Apnea del sueño (CPAP)", "Stroke / TIA":"Derrame cerebral / AIT", "Wheelchair / Scooter":"Silla de ruedas / Scooter", "Wheelchair / Walker":"Silla de ruedas / Andador",
-    "Kidney Disease / Failure":"Enfermedad renal / Insuficiencia", "Neuropathy":"Neuropatía", "Stent (Coronary)":"Stent (coronario)", "Organ Transplant":"Trasplante de órganos", "Schizophrenia":"Esquizofrenia", "Bone Marrow Transplant":"Trasplante de médula ósea", "Jail / Incarcerated":"Cárcel / Encarcelado", "Cystic Fibrosis":"Fibrosis quística", "Bronchitis (Chronic)":"Bronquitis (crónica)", "Huntington’s Disease":"Enfermedad de Huntington", "Illegal Drug Use":"Uso de drogas ilegales", "Hepatitis C":"Hepatitis C", "Heart Valve Replacement":"Reemplazo de válvula cardíaca", "Parole / Probation":"Libertad condicional / Probatoria", "Felony":"Delito grave", "Heart Surgery / CABG":"Cirugía cardíaca / Bypass (CABG)", "Obesity (BMI)":"Obesidad (IMC)", "Ulcerative Colitis":"Colitis ulcerosa", "Dialysis (Kidney)":"Diálisis (renal)", "Tuberculosis":"Tuberculosis", "Hepatitis B":"Hepatitis B", "COPD":"EPOC", "Lupus (SLE)":"Lupus (LES)", "Terminal Illness":"Enfermedad terminal", "Black Lung":"Pulmón negro (Neumoconiosis)", "Hepatitis A":"Hepatitis A"
+    "Kidney Disease / Failure":"Enfermedad renal / Insuficiencia", "Neuropathy":"Neuropatía", "Stent (Coronary)":"Stent (coronario)", "Organ Transplant":"Trasplante de órganos", "Schizophrenia":"Esquizofrenia", "Bone Marrow Transplant":"Trasplante de médula ósea", "Jail / Incarcerated":"Cárcel / Encarcelado", "Cystic Fibrosis":"Fibrosis quística", "Bronchitis (Chronic)":"Bronquitis (crónica)", "Huntington’s Disease":"Enfermedad de Huntington", "Illegal Drug Use":"Uso de drogas ilegales", "Hepatitis C":"Hepatitis C", "Heart Valve Replacement":"Reemplazo de válvula cardíaca", "Parole / Probation":"Libertad condicional / Probatoria", "Felony":"Delito grave", "Heart Surgery / CABG":"Cirugía cardíaca / Bypass (CABG)", "Obesity (BMI)":"Obesidad (IMC)", "Ulcerative Colitis":"Colitis ulcerosa", "Dialysis (Kidney)":"Diálisis (renal)", "Tuberculosis":"Tuberculosis", "Hepatitis B":"Hepatitis B", "COPD":"EPOC", "Lupus (SLE)":"Lupus (LES)", "Terminal Illness":"Enfermedad terminal", "Black Lung":"Pulmón negro (Neumoconiosis)", "Hepatitis A":"Hepatitis A", "Awaiting Surgery":"Cirugía pendiente"
   };
 
   function language() { return ($("language") && $("language").value) || "es"; }
@@ -60,11 +60,16 @@
     return found ? found[1] : n;
   }
 
+  // Keep every source-grid label visible in the picker. Similar labels still
+  // resolve through canonical() when we evaluate a product, but they are not
+  // collapsed out of the UI (for example COPD vs. chronic bronchitis/COPD).
+  const sparkOnlyConditions = ["Awaiting Surgery"];
   const allConditions = new Map();
   [...wholeData.conditions, ...termData.conditions].forEach((condition) => {
-    const key = canonical(condition.name);
+    const key = normalize(condition.name);
     if (!allConditions.has(key) || termData.conditions.includes(condition)) allConditions.set(key, condition.name);
   });
+  sparkOnlyConditions.forEach((name) => allConditions.set(normalize(name), name));
 
   function displayCondition(key) {
     const name = allConditions.get(key) || key;
@@ -182,7 +187,11 @@
 
   function worst(parts) { return parts.reduce((a,b) => (ranks[b.outcome] > ranks[a.outcome] ? b : a), parts[0]); }
 
-  function findCondition(data, key) { return data.conditions.find((condition) => canonical(condition.name) === key); }
+  function findCondition(data, key) {
+    const selectedName = allConditions.get(key) || key;
+    const selectedCanonical = canonical(selectedName);
+    return data.conditions.find((condition) => canonical(condition.name) === selectedCanonical);
+  }
 
   function statusResult(allowed, selected) {
     if (!selected) return { outcome:"verify", detail:text().verifyStatus };
@@ -199,7 +208,18 @@
   };
 
   function wholeProducts() {
-    return wholeData.carriers.map((carrier) => ({ id:`whole_${carrier.id}`, carrierId:carrier.id, abbr:carrier.abbr, name:carrier.name, product:carrier.product, category:"whole", ageMin:carrier.ageMin, ageMax:carrier.ageMax, tobaccoAgeMax:carrier.tobaccoAgeMax, status:wholeStatus[carrier.id] || [], source:"whole", chart:wholeData.buildCharts[carrier.id] }));
+    const published = wholeData.carriers.map((carrier) => ({ id:`whole_${carrier.id}`, carrierId:carrier.id, abbr:carrier.abbr, name:carrier.name, product:carrier.product, category:"whole", ageMin:carrier.ageMin, ageMax:carrier.ageMax, tobaccoAgeMax:carrier.tobaccoAgeMax, status:wholeStatus[carrier.id] || [], source:"whole", chart:wholeData.buildCharts[carrier.id] }));
+    const additional = [
+      { id:"whole_ethos", carrierId:"ethos", abbr:"ETH", name:"Ethos", product:"Advantage Whole Life / Beacon / Simple Life Solutions", category:"whole", ageMin:null, ageMax:null, status:["citizen"], source:"external", chart:null },
+      { id:"whole_instabrain", carrierId:"instabrain", abbr:"IB", name:"InstaBrain", product:"Guaranteed Issue / Final Expense", category:"whole", ageMin:null, ageMax:null, status:[], source:"external", chart:null }
+    ];
+    return [...published, ...additional];
+  }
+
+  function additionalTermProducts() {
+    return [
+      { id:"term_instabrain", carrierId:"instabrain", abbr:"IB", name:"InstaBrain", product:"Term with Living Benefits / Pure Term", category:"term", ageMin:null, ageMax:null, status:[], source:"external", chart:null }
+    ];
   }
 
   function healthResult(product) {
@@ -247,7 +267,7 @@
     const height = feet * 12 + inches;
     const level = $("uw-comp-level").value;
     const premium = Number($("uw-comp-ap").value);
-    const products = [...termProducts(), ...wholeProducts()];
+    const products = [...termProducts(), ...additionalTermProducts(), ...wholeProducts()];
     const results = products.map((product) => {
       const parts = { age:ageResult(product, age, tobacco), status:statusResult(product.status, status), build:buildResult(product.chart, height, weight, age, selectedConditions.size > 0), health:healthResult(product) };
       const overall = worst(Object.values(parts));
